@@ -1,11 +1,13 @@
 FROM golang AS build
 
+ENV VERSION=1.1.0
 ENV GOARCH=$TARGETPLATFORM
-WORKDIR /go/src/grimd/
 
-RUN git clone https://github.com/looterz/grimd.git /go/src/grimd/
+WORKDIR /go/src/
+RUN wget https://github.com/looterz/grimd/archive/refs/tags/v${VERSION}.tar.gz && tar -xvf v${VERSION}.tar.gz
+
+WORKDIR /go/src/grimd-${VERSION}
 RUN go build -o /bin/grimd
-
 
 
 FROM gcr.io/distroless/base
