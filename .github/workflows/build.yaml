@@ -2,7 +2,7 @@ name: Build and publish
 
 on:
   schedule:
-    - cron:  '0 4 * * *'
+    - cron:  '0 3 * * *'
   workflow_dispatch:
 
 
@@ -21,14 +21,6 @@ jobs:
           repository: looterz/grimd
           releases-only: true
         id: latest
-
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            dbrbc/grimd
-            ghcr.io/dbrbc/grimd
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -56,5 +48,6 @@ jobs:
           build-args: VERSION=${{ steps.latest.outputs.tag }}
           platforms: linux/arm,linux/arm64,linux/amd64
           push: true
-          tags: ${{ steps.latest.outputs.tag }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: |
+            ghcr.io/dbrbc/grimd:${{ steps.latest.outputs.tag }}
+            dbrbc/grimd:${{ steps.latest.outputs.tag }}
