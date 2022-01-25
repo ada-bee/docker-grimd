@@ -50,4 +50,6 @@ jobs:
           push: true
           tags: |
             ghcr.io/dbrbc/grimd:${{ steps.latest.outputs.tag }}
+            ghcr.io/dbrbc/grimd:latest
             dbrbc/grimd:${{ steps.latest.outputs.tag }}
+            dbrbc/grimd:latest
