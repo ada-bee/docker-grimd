@@ -1,9 +1,8 @@
 name: Build and publish
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  schedule:
+    - cron:  '0 4 * * *'
   workflow_dispatch:
 
 
@@ -16,6 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+    steps:
+      - name: Get Latest Tag
+        uses: oprypin/find-latest-tag@v1
+        with:
+          repository: looterz/grimd
+          releases-only: true
+        id: latest
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -23,8 +30,6 @@ jobs:
           images: |
             dbrbc/grimd
             ghcr.io/dbrbc/grimd
-          tags: |
-            type=match,pattern=\d.\d.\d
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
@@ -51,5 +56,5 @@ jobs:
         with:
           platforms: linux/arm,linux/arm64,linux/amd64
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.latest.outputs.tag }}
           labels: ${{ steps.meta.outputs.labels }}

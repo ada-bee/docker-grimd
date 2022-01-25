@@ -1,12 +1,11 @@
 FROM golang AS build
 
-ENV VERSION=1.1.0
-ENV GOARCH=$TARGETPLATFORM
+ARG VERSION
 
 WORKDIR /go/src/
-RUN wget https://github.com/looterz/grimd/archive/refs/tags/v${VERSION}.tar.gz && tar -xvf v${VERSION}.tar.gz
+RUN wget https://github.com/looterz/grimd/archive/refs/tags/${VERSION}.tar.gz && tar -xvf ${VERSION}.tar.gz && mv grimd*/ grimd/
 
-WORKDIR /go/src/grimd-${VERSION}
+WORKDIR /go/src/grimd
 RUN go build -o /bin/grimd
 
 
