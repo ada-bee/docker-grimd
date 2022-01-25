@@ -53,6 +53,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          build-args: VERSION=${{ steps.latest.outputs.tag }}
           platforms: linux/arm,linux/arm64,linux/amd64
           push: true
           tags: ${{ steps.latest.outputs.tag }}
