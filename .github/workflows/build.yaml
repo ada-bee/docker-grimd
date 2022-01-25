@@ -15,7 +15,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-    steps:
       - name: Get Latest Tag
         uses: oprypin/find-latest-tag@v1
         with:
