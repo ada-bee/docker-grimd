@@ -8,7 +8,7 @@ Compared to the official releases:
 
 # Usage
       dns:
-        image: ghcr.io/dbrbc/grimd
+        image: ghcr.io/ada-bee/grimd
         container_name: grimd
         restart: unless-stopped
         volumes:
